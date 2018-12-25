@@ -23,6 +23,11 @@ RUN apt-get update && \
     libfreetype6-dev libglib2.0-0 libxext6 libsm6 libxrender1 libfontconfig1 libgeos-dev libgdal1-dev && \
     /tmp/clean-layer.sh
 
+RUN cd /usr/local/src && wget https://github.com/xianyi/OpenBLAS/archive/develop.zip && \
+    unzip develop.zip && cd OpenBLAS-develop && \
+    make -j 4 && make PREFIX=/usr/local install && \
+    rm -rf /usr/local/src/OpenBLAS-develop
+
 RUN pip install cython numpy pandas seaborn python-dateutil dask pytagcloud pyyaml joblib \
     husl geopy ml_metrics mne pyshp gensim spacy && \
     spacy download en && \
